@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+<meta name="theme-color" content="#090b20">
+<title>Sarah's Math World | Space Tug-of-War</title>
+<style>
+:root{
+  --bg:#090b20;--panel:#10162f;--panel2:#0b1027;--line:#24577a;
+  --red:#ff3c62;--blue:#08c9ec;--gold:#ffd21c;--text:#fff;
+  --muted:#aab3d0;--soft:#18213d;--green:#08bd88;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;user-select:none}
+body{min-height:100vh;color:var(--text);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;
+ background:radial-gradient(circle at 50% 15%,#171b43 0,#0b0d25 48%,#070817 100%);padding:10px 12px 24px;overflow-x:hidden}
+body.girls{--panel:#fff9ff;--panel2:#fff;--line:#f3acd9;--red:#ed4297;--blue:#22c5b6;--gold:#ffd34e;--text:#34204b;--muted:#856a91;--soft:#f8eafa;
+ background:radial-gradient(circle at 50% 10%,#fbe3fa 0,#f4d9f4 45%,#e8f6ff 100%)}
+.shell{width:min(100%,680px);margin:auto;position:relative}
+.stars{position:fixed;inset:0;pointer-events:none;opacity:.45;background-image:radial-gradient(#8bbbe9 1px,transparent 1px),radial-gradient(#fff 1px,transparent 1px);background-size:83px 83px,137px 137px;background-position:0 0,35px 52px}
+body.girls .stars{opacity:.25;background-image:radial-gradient(#e58bd1 1px,transparent 1px),radial-gradient(#fff 1px,transparent 1px)}
+.top-card{position:relative;background:rgba(13,19,43,.96);border:3px solid #235a7c;border-radius:38px;padding:22px 20px 18px;margin:8px 0 15px;box-shadow:0 12px 35px #0005}
+body.girls .top-card{background:rgba(255,255,255,.94);border-color:#f1afd8;box-shadow:0 12px 30px #d48dc455}
+.brand{display:grid;grid-template-columns:68px 1fr auto;gap:12px;align-items:center}
+.logo{width:64px;height:78px;border-radius:24px;border:3px solid #ffd34e;background:linear-gradient(145deg,#ff573d,#ff9d22);display:grid;place-items:center;font-size:39px;box-shadow:0 0 0 2px #5b3268}
+body.girls .logo{background:linear-gradient(145deg,#c75de5,#f58cc9);border-color:#fff}
+.teacher{font-size:clamp(23px,5vw,32px);font-weight:950;line-height:1.15;color:#ffe35a;text-shadow:0 2px 0 #8e5a18}
+body.girls .teacher{color:#f2d44f;text-shadow:0 2px 3px #e5b9a0}
+.subtitle{color:#9cecff;font-size:clamp(14px,3.4vw,18px);font-weight:700;margin-top:7px;line-height:1.35}
+body.girls .subtitle{color:#7936a0}
+.class-pill{align-self:start;background:#08b9d5;color:#06152a;border-radius:28px;padding:9px 14px;font-weight:900;letter-spacing:1px;font-size:14px;min-width:112px;text-align:center}
+body.girls .class-pill{background:#e946a0;color:white}
+.editions{display:flex;background:#090d20;border:1px solid #39405a;border-radius:28px;padding:5px;margin-top:22px;width:max-content;max-width:100%}
+body.girls .editions{background:#eee9f0;border-color:#d9cbdc}
+.edition{border:0;background:transparent;color:#c5c9d7;border-radius:23px;padding:10px 14px;font-size:15px;font-weight:850;white-space:nowrap}
+.edition.active{background:linear-gradient(100deg,#ff405b,#245ee9);color:#fff;box-shadow:0 3px 12px #0005}
+body.girls .edition.active{background:linear-gradient(100deg,#ed4297,#9b4be9);color:white}
+.controls{display:flex;align-items:center;gap:10px;margin-top:20px;flex-wrap:wrap}
+.levels{display:flex;align-items:center;gap:2px;background:#080d20;border:1px solid #343c56;border-radius:24px;padding:5px;flex:1;min-width:230px}
+body.girls .levels{background:#eee9f0;border-color:#d8cbdc}
+.level{border:0;background:transparent;color:#d4d7e2;border-radius:20px;padding:9px 14px;font-size:15px;font-weight:850}
+.level.active{background:#ffd21c;color:#19172a}
+.sound,.restart{border:0;border-radius:22px;font-weight:850;color:white}
+.sound{width:68px;height:66px;background:#202942;border:1px solid #48506b;font-size:26px}
+body.girls .sound{background:#fff;border-color:#ead7e9}
+.restart{background:#f2385c;padding:14px 18px;font-size:16px;white-space:nowrap}
+.rule{position:relative;text-align:center;background:linear-gradient(100deg,#ffb900,#ffdc19);color:#17172a;border:2px solid #ffe88b;border-radius:28px;padding:10px 14px;font-weight:950;font-size:clamp(13px,3vw,17px);letter-spacing:.3px;line-height:1.35;margin-bottom:16px;box-shadow:0 5px 12px #0004}
+.scoreboard{background:rgba(14,20,45,.94);border-radius:30px;padding:18px 14px 15px;margin-bottom:15px}
+body.girls .scoreboard{background:rgba(255,255,255,.92);box-shadow:0 8px 24px #b77ca533}
+.teams{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.team{position:relative;border-radius:27px;min-height:145px;padding:16px 10px 12px;text-align:center;border:3px solid #244e92;background:#101b3a;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:4px}
+.team.left{border-color:#ff3d5d;background:#390e1b}
+.team.right{border-color:#315ba3;background:#111d40}
+.team.active{outline:4px solid #ffd21c;outline-offset:-5px;box-shadow:0 0 18px #ffd21c66}
+body.girls .team{background:#fbe8f4;border-color:#8bd9d1;color:#9a3977}
+body.girls .team.left{background:#fbe2f0;border-color:#ec6cae}
+body.girls .team.right{background:#e0f8f5;border-color:#79d7cc;color:#287f78}
+.team .team-icon{font-size:37px;line-height:1.1}
+.team .name{font-size:clamp(18px,4vw,25px);font-weight:950;line-height:1.25}
+.team .sub{font-size:15px;font-weight:750;opacity:.8}
+.score{position:absolute;right:10px;top:50%;transform:translateY(-50%);font-size:30px;font-weight:1000;color:#ffe12e}
+.team.right .score{left:9px;right:auto;color:#11cde5}
+.turn{margin:14px 8px 0;border-radius:28px;background:#a91f34;color:#fff;text-align:center;padding:13px 12px;font-size:clamp(15px,3.4vw,20px);font-weight:900;line-height:1.35}
+body.girls .turn{background:#e9429b}
+.arena{position:relative;background:#111a38;border-radius:28px;padding:15px 12px 18px;margin-bottom:16px;overflow:hidden}
+body.girls .arena{background:#fff;border:1px solid #f3d8ed}
+.track{height:145px;position:relative;display:flex;align-items:center;justify-content:center}
+.rope{position:absolute;left:15%;right:15%;height:17px;border-radius:20px;background:linear-gradient(90deg,#ff5278,#f59bd0,#4da6ff);box-shadow:0 0 18px #e46cb8}
+body.girls .rope{background:linear-gradient(90deg,#f58bc4,#f8b6d9,#6bd9d0);box-shadow:0 0 18px #e88cc8}
+.center-mark{position:absolute;left:50%;height:48px;width:8px;border-radius:8px;background:#fff;transform:translateX(-50%);z-index:2}
+.knot{position:absolute;left:50%;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;background:radial-gradient(circle,#fff8a6,#ffc400 55%,#f09b00);font-size:28px;box-shadow:0 0 22px #ffcf25;transform:translateX(-50%);transition:left .4s;z-index:3}
+body.girls .knot{background:radial-gradient(circle,#fff,#ff80c8 55%,#d83a9d)}
+.avatar{position:absolute;top:0;font-size:61px;z-index:4;filter:drop-shadow(0 5px 4px #0006)}
+.avatar.left{left:3%}.avatar.right{right:3%}
+.arena-labels{display:flex;justify-content:space-between;align-items:center;font-weight:850;font-size:14px;padding:0 6px;color:#ff8093}
+.arena-labels span:last-child{color:#31d8ee}
+body.girls .arena-labels span:first-child{color:#d33f8c}
+body.girls .arena-labels span:last-child{color:#239c91}
+.win-lines{display:flex;justify-content:space-around;color:#bdc5d8;font-size:13px;font-weight:800;margin-top:18px;gap:4px;text-align:center}
+body.girls .win-lines{color:#7d6786}
+.question-card{background:#10162f;border-radius:28px;padding:20px 16px 22px;margin-bottom:20px}
+body.girls .question-card{background:#fff;border:1px solid #f0d9ed;box-shadow:0 8px 22px #c88fc522}
+.equation{display:flex;align-items:center;justify-content:center;gap:clamp(7px,3vw,15px);padding:15px 7px;border:2px solid #786b2b;border-radius:22px;margin-bottom:20px}
+body.girls .equation{border-color:#e7d38a}
+.number-box{min-width:clamp(66px,17vw,116px);height:clamp(74px,19vw,116px);border-radius:23px;display:grid;place-items:center;font-size:clamp(37px,9vw,60px);font-weight:1000}
+.known{background:#571a2b;color:#fff}
+.missing{background:#3d3020;color:#ffe14d}
+.target{background:#4a3519;color:#ffe14d}
+body.girls .known{background:#fff;color:#d5328b;box-shadow:0 4px 15px #d9a5cb66}
+body.girls .missing{background:#f5e6c8;color:#a14ac4}
+body.girls .target{background:#f4e4c7;color:#dba900}
+.operator{font-size:clamp(34px,8vw,54px);font-weight:1000;color:#ffcf18}
+.visual{border:1px solid #39415b;border-radius:25px;padding:18px 12px;margin-bottom:18px;display:grid;grid-template-columns:100px 1fr 100px;gap:8px;align-items:center;text-align:center;background:#0a1025}
+body.girls .visual{background:#fffafd;border-color:#ead8e8}
+.visual-title{font-weight:850;font-size:15px;line-height:1.35}
+.visual-prompt{font-size:clamp(15px,3.7vw,21px);font-weight:950;color:#ffdc3d;line-height:1.35}
+body.girls .visual-prompt{color:#e0b92c}
+.count-hint{background:#394052;color:#fff;border-radius:50px;padding:8px 7px;font-size:13px;line-height:1.4;font-weight:900}
+body.girls .count-hint{background:#f0e9f2;color:#66536d}
+.counters{display:flex;flex-wrap:wrap;justify-content:center;gap:9px;margin-top:18px;grid-column:1/-1}
+.orb{width:clamp(43px,9vw,64px);height:clamp(43px,9vw,64px);border-radius:50%;display:grid;place-items:center;font-size:18px;font-weight:950}
+.orb.filled{background:radial-gradient(circle at 35% 25%,#ff9ca4,#ff3857 70%);color:white;box-shadow:0 0 18px #ff486a88}
+body.girls .orb.filled{background:radial-gradient(circle at 35% 25%,#ffc8e8,#ee5cae 70%);box-shadow:0 0 18px #ed79bd88}
+.orb.empty{border:5px dashed #77839b;color:#ffe14d;background:#131a31}
+body.girls .orb.empty{border-color:#e879b8;background:#fff0f8;color:#9d43bf}
+.instruction{text-align:center;font-size:16px;font-weight:850;color:#e2e7f7;margin:4px 0 14px}
+body.girls .instruction{color:#705a79}
+.choices{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.choice{border:3px solid #ff7186;border-radius:25px;min-height:125px;color:#fff;font-size:clamp(38px,9vw,58px);font-weight:1000;display:flex;flex-direction:column;justify-content:center;align-items:center;gap:2px;text-shadow:0 3px 3px #0004;box-shadow:0 5px 10px #0003}
+.choice:nth-child(1){background:linear-gradient(145deg,#ff3434,#bf0642)}
+.choice:nth-child(2){background:linear-gradient(145deg,#ffc31c,#e69a00);border-color:#ffe36b}
+.choice:nth-child(3){background:linear-gradient(145deg,#06c88c,#00896f);border-color:#56e5ba}
+.choice:nth-child(4){background:linear-gradient(145deg,#2879ef,#0750bd);border-color:#36c6ef}
+body.girls .choice:nth-child(1){background:linear-gradient(145deg,#ff73ac,#e83e89);border-color:#ffadd1}
+body.girls .choice:nth-child(2){background:linear-gradient(145deg,#c47aff,#754be5);border-color:#d5a7ff}
+body.girls .choice:nth-child(3){background:linear-gradient(145deg,#27d9ba,#05a88e);border-color:#8bf0d8}
+body.girls .choice:nth-child(4){background:linear-gradient(145deg,#ffd34e,#efa900);border-color:#ffe58d}
+.choice:active{transform:scale(.96)}
+.choice.correct{background:#08bd88!important;border-color:white!important}
+.choice.wrong{background:#e83455!important;border-color:white!important}
+.dots{display:flex;flex-wrap:wrap;justify-content:center;gap:4px;max-width:90px}
+.dot{width:7px;height:7px;border-radius:50%;background:#fff;opacity:.9}
+.modal{position:fixed;inset:0;background:#000c;display:none;align-items:center;justify-content:center;padding:20px;z-index:20}
+.modal.show{display:flex}
+.modal-box{background:#151a32;border:3px solid #ffd21c;border-radius:28px;padding:28px;text-align:center;max-width:420px;width:100%;color:white}
+body.girls .modal-box{background:#fff5fc;color:#512a61}
+.modal-box .trophy{font-size:60px}
+.modal-box h2{color:#ffd21c;font-size:30px;margin:10px}
+.modal-box p{line-height:1.5;margin-bottom:18px}
+.modal-box button{background:#ffd21c;border:0;border-radius:30px;padding:13px 26px;font-size:18px;font-weight:900}
+#confetti{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:19}
+@media(max-width:420px){
+ body{padding:6px 7px 18px}.top-card{padding:16px 12px;border-radius:28px}.brand{grid-template-columns:55px 1fr auto;gap:8px}
+ .logo{width:52px;height:65px;font-size:31px}.class-pill{min-width:84px;font-size:12px;padding:8px}
+ .edition{font-size:12px;padding:9px 10px}.controls{gap:7px}.levels{min-width:0}.level{padding:8px 10px;font-size:13px}
+ .sound{width:52px;height:54px}.restart{padding:12px 12px;font-size:14px}
+ .team{min-height:130px;padding:10px 5px}.team .sub{font-size:12px}.team .team-icon{font-size:31px}
+ .score{font-size:25px;right:6px}.team.right .score{left:6px}
+ .visual{grid-template-columns:78px 1fr 82px;padding:14px 7px}.visual-title{font-size:12px}.count-hint{font-size:11px}
+ .choice{min-height:108px;border-radius:20px}.question-card{padding:14px 10px}
+}
+</style>
+</head>
+<body class="boys">
+<div class="stars"></div><canvas id="confetti"></canvas>
+<div class="shell">
+<header class="top-card">
+ <div class="brand">
+  <div class="logo" id="logo">🕷️</div>
+  <div><div class="teacher">Teacher: Sarah<br>Elsherbiny</div><div class="subtitle" id="subtitle">Space Tug-of-War: Missing Addends Challenge</div></div>
+  <div class="class-pill" id="class-pill">CLASS: 1<br>BOYS</div>
+ </div>
+ <div class="editions">
+  <button class="edition active" id="boys-btn" onclick="switchTheme('boys')">🕷️ 1 Boys Edition</button>
+  <button class="edition" id="girls-btn" onclick="switchTheme('girls')">👑 1 Girls Edition</button>
+ </div>
+ <div class="controls">
+  <div class="levels">
+   <button class="level active" data-limit="10" onclick="setLevel(10,this)">To 10</button>
+   <button class="level" data-limit="15" onclick="setLevel(15,this)">To 15</button>
+   <button class="level" data-limit="20" onclick="setLevel(20,this)">To 20</button>
+  </div>
+  <button class="sound" id="sound-btn" onclick="toggleSound()" aria-label="Toggle sound">🔊</button>
+  <button class="restart" onclick="resetGame()">🔄 Restart</button>
+ </div>
+</header>
+
+<div class="rule">⚡ STRICT RULE: ONE CHANCE ONLY! A WRONG ANSWER GIVES THE PULL TO THE OPPONENT!</div>
+
+<section class="scoreboard">
+ <div class="teams">
+  <div class="team left active" id="team-left"><div class="team-icon" id="left-icon">🕷️</div><div class="name" id="left-name">Team Spider-Man</div><div class="sub" id="left-sub">Team Red</div><div class="score" id="left-score">0</div></div>
+  <div class="team right" id="team-right"><div class="team-icon" id="right-icon">🚀</div><div class="name" id="right-name">Cosmic Rangers</div><div class="sub" id="right-sub">Team Blue</div><div class="score" id="right-score">0</div></div>
+ </div>
+ <div class="turn" id="turn">🎯 Turn: Team Spider-Man's Turn to Pull!</div>
+</section>
+
+<section class="arena">
+ <div class="track">
+  <div class="rope" id="rope"></div><div class="center-mark"></div><div class="knot" id="knot">⚡</div>
+  <div class="avatar left" id="left-avatar">🕷️</div><div class="avatar right" id="right-avatar">🚀</div>
+ </div>
+ <div class="arena-labels"><span id="arena-left">Spider-Man</span><span id="arena-right">Cosmic Ranger</span></div>
+ <div class="win-lines"><span>🏁 Red Win Line</span><span>⚖️ Center</span><span>Blue Win Line 🏁</span></div>
+</section>
+
+<section class="question-card">
+ <div class="equation">
+  <div class="number-box known" id="known">5</div><div class="operator">+</div>
+  <div class="number-box missing" id="missing">?</div><div class="operator">=</div>
+  <div class="number-box target" id="target">10</div>
+ </div>
+ <div class="visual">
+  <div class="visual-title">🔮 Visual<br> Counters:</div>
+  <div class="visual-prompt" id="prompt">We have 5 space orbs. How many more make 10?</div>
+  <div class="count-hint">COUNT THE<br> '?' SLOTS</div>
+  <div class="counters" id="counters"></div>
+ </div>
+ <div class="instruction">⚡ One chance only! Tap the correct number to pull:</div>
+ <div class="choices" id="choices"></div>
+</section>
+</div>
+
+<div class="modal" id="modal"><div class="modal-box"><div class="trophy" id="trophy">🏆</div><h2 id="winner">Team Wins!</h2><p id="message">Outstanding work!</p><button onclick="resetGame()">Play Again 🔄</button></div></div>
+
+<script>
+const $=id=>document.getElementById(id);
+let theme='boys',active=1,position=0,limit=10,problem=null,locked=false,soundOn=true,confettiTimer=null;
+const winAt=4;
+const configs={
+ boys:{title:'Space Tug-of-War: Missing Addends Challenge',classText:'CLASS: 1<br>BOYS',logo:'🕷️',leftIcon:'🕷️',rightIcon:'🚀',left:'Team Spider-Man',right:'Cosmic Rangers',leftShort:'Spider-Man',rightShort:'Cosmic Ranger',leftSub:'Team Red',rightSub:'Team Blue',avatarL:'🕷️',avatarR:'🚀',orb:'space orbs'},
+ girls:{title:'Fairytale Tug-of-War: Missing Addends Challenge',classText:'CLASS: 1<br>GIRLS',logo:'👑',leftIcon:'👑',rightIcon:'🧜‍♀️',left:'Team Princesses',right:'Team Mermaids',leftShort:'Princesses',rightShort:'Mermaids',leftSub:'Castle Royals',rightSub:'Sparkle Lagoon',avatarL:'👸',avatarR:'🧜‍♀️',orb:'magic pearls'}
+};
+let audio=null;
+function tone(f,type='sine',dur=.22,delay=0){
+ if(!soundOn)return;
+ const AC=window.AudioContext||window.webkitAudioContext;if(!AC)return;
+ try{if(!audio)audio=new AC();setTimeout(()=>{if(audio.state==='suspended')audio.resume();let o=audio.createOscillator(),g=audio.createGain();o.type=type;o.frequency.value=f;g.gain.setValueAtTime(.12,audio.currentTime);g.gain.exponentialRampToValueAtTime(.0001,audio.currentTime+dur);o.connect(g);g.connect(audio.destination);o.start();o.stop(audio.currentTime+dur)},delay)}catch(e){}
+}
+function toggleSound(){soundOn=!soundOn;$('sound-btn').textContent=soundOn?'🔊':'🔇'}
+function switchTheme(t){theme=t;document.body.className=t;$('boys-btn').classList.toggle('active',t==='boys');$('girls-btn').classList.toggle('active',t==='girls');renderTheme();resetGame()}
+function renderTheme(){
+ let c=configs[theme];$('subtitle').textContent=c.title;$('class-pill').innerHTML=c.classText;$('logo').textContent=c.logo;
+ $('left-icon').textContent=c.leftIcon;$('right-icon').textContent=c.rightIcon;$('left-name').textContent=c.left;$('right-name').textContent=c.right;
+ $('left-sub').textContent=c.leftSub;$('right-sub').textContent=c.rightSub;$('left-avatar').textContent=c.avatarL;$('right-avatar').textContent=c.avatarR;
+ $('arena-left').textContent=c.leftShort;$('arena-right').textContent=c.rightShort;updateTurn();
+}
+function setLevel(n,btn){limit=n;document.querySelectorAll('.level').forEach(x=>x.classList.remove('active'));btn.classList.add('active');resetGame()}
+function makeProblem(){
+ let target=Math.floor(Math.random()*(limit-4))+5;
+ let known=Math.floor(Math.random()*(target-1))+1,missing=target-known;
+ let choices=[missing];while(choices.length<4){let v=Math.floor(Math.random()*limit)+1;if(!choices.includes(v))choices.push(v)}
+ for(let i=choices.length-1;i>0;i--){let j=Math.floor(Math.random()*(i+1));[choices[i],choices[j]]=[choices[j],choices[i]]}
+ return{target,known,missing,choices}
+}
+function renderQuestion(){
+ problem=makeProblem();locked=false;$('known').textContent=problem.known;$('missing').textContent='?';$('target').textContent=problem.target;
+ $('prompt').textContent=`We have ${problem.known} ${configs[theme].orb}. How many more make ${problem.target}?`;
+ let c=$('counters');c.innerHTML='';
+ for(let i=1;i<=problem.target;i++){let b=document.createElement('div');b.className='orb '+(i<=problem.known?'filled':'empty');b.textContent=i<=problem.known?i:'?';c.appendChild(b)}
+ let grid=$('choices');grid.innerHTML='';
+ problem.choices.forEach(v=>{let b=document.createElement('button');b.className='choice';b.type='button';let num=document.createElement('span');num.textContent=v;b.appendChild(num);let dots=document.createElement('span');dots.className='dots';for(let i=0;i<v;i++){let d=document.createElement('i');d.className='dot';dots.appendChild(d)}b.appendChild(dots);b.onclick=()=>answer(v,b);grid.appendChild(b)});
+ updateTurn()
+}
+function updateTurn(){
+ let c=configs[theme];$('team-left').classList.toggle('active',active===1);$('team-right').classList.toggle('active',active===2);
+ $('turn').textContent=`🎯 Turn: ${active===1?c.left:c.right}'s Turn to Pull!`;
+}
+function updateRope(){
+ let x=50+(position/winAt)*34;$('knot').style.left=x+'%';$('rope').style.transform=`translateX(${(position/winAt)*12}%)`;
+ $('left-score').textContent=Math.max(0,-position);$('right-score').textContent=Math.max(0,position);
+}
+function answer(v,btn){
+ if(locked)return;locked=true;let correct=v===problem.missing;
+ if(correct){btn.classList.add('correct');$('missing').textContent=v;tone(theme==='boys'?620:740,'triangle');}
+ else{btn.classList.add('wrong');tone(160,'square');[...$('choices').children].forEach(b=>{if(Number(b.querySelector('span').textContent)===problem.missing)b.classList.add('correct')})}
+ position+=(active===1?(correct?-1:1):(correct?1:-1));updateRope();
+ if(Math.abs(position)>=winAt){setTimeout(()=>victory(position<0?1:2),500);return}
+ setTimeout(()=>{active=active===1?2:1;renderQuestion()},correct?1250:1750)
+}
+function victory(team){
+ let c=configs[theme],name=team===1?c.left:c.right,icon=team===1?c.leftIcon:c.rightIcon;
+ $('trophy').textContent=icon;$('winner').textContent=name+' Wins!';$('message').textContent=`Outstanding work! ${name} pulled the rope to victory! Honoring Teacher Sarah Elsherbiny's Grade 1 Champions!`;$('modal').classList.add('show');
+ [440,554,659,880].forEach((f,i)=>tone(f,'triangle',.35,i*130));celebrate()
+}
+function resetGame(){$('modal').classList.remove('show');position=0;active=1;updateRope();renderQuestion()}
+function celebrate(){
+ let canvas=$('confetti'),ctx=canvas.getContext('2d');canvas.width=innerWidth;canvas.height=innerHeight;let bits=Array.from({length:90},()=>({x:canvas.width/2,y:canvas.height/3,vx:(Math.random()-.5)*9,vy:Math.random()*-8-2,h:Math.random()*360}));
+ let frames=0;cancelAnimationFrame(confettiTimer);
+ function draw(){ctx.clearRect(0,0,canvas.width,canvas.height);bits.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.vy+=.16;ctx.fillStyle=`hsl(${p.h},90%,60%)`;ctx.fillRect(p.x,p.y,6,9)});if(++frames<150)confettiTimer=requestAnimationFrame(draw);else ctx.clearRect(0,0,canvas.width,canvas.height)}
+ draw()
+}
+renderTheme();resetGame();
+</script>
+</body>
+</html>
